@@ -131,3 +131,50 @@ GROUP BY year_mont;
 |2020-02|389|
 |2020-03|399|
 |2020-04|238|
+
+~~~ SQL 
+/*closing balance for each customer at the end of the month*/
+SELECT customer_id, DATE_FORMAT(txn_date, '%Y-%m-%d') AS year_mont, SUM(txn_amount) AS closing_balance
+FROM customer_transactions
+WHERE txn_date = (
+    SELECT MAX(txn_date)
+    FROM customer_transactions AS sub
+    WHERE YEAR(sub.txn_date) = YEAR(customer_transactions.txn_date)
+      AND MONTH(sub.txn_date) = MONTH(customer_transactions.txn_date)
+      AND sub.customer_id = customer_transactions.customer_id
+)
+GROUP BY customer_id, year_mont
+order by customer_id;
+~~~
+
+**Result**
+|year_mont|customer_count|
+|---|---|
+|2020-01|283|
+|2020-02|389|
+|2020-03|399|
+|2020-04|238|
+
+~~~ SQL 
+/*closing balance for each customer at the end of the month*/
+SELECT customer_id, DATE_FORMAT(txn_date, '%Y-%m-%d') AS year_mont, SUM(txn_amount) AS closing_balance
+FROM customer_transactions
+WHERE txn_date = (
+    SELECT MAX(txn_date)
+    FROM customer_transactions AS sub
+    WHERE YEAR(sub.txn_date) = YEAR(customer_transactions.txn_date)
+      AND MONTH(sub.txn_date) = MONTH(customer_transactions.txn_date)
+      AND sub.customer_id = customer_transactions.customer_id
+)
+GROUP BY customer_id, year_mont
+order by customer_id;
+~~~
+
+**Result(first 5 rows)** 
+|customer_id|year_mont|year_mont|
+|---|---|---|
+|1|2020-01-02|312|
+|1|2020-03-19|664|
+|2|2020-01-03|549|
+|2|2020-03-24|61|
+|3|2020-01-27|144|

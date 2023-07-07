@@ -48,6 +48,7 @@ FROM cs3_bankdata_dwd.customer_nodes
 group by node_id;
 ~~~
 
+**Result**
 |node_id|days_diff|
 |---|---|
 |4|14.81|
@@ -57,16 +58,24 @@ group by node_id;
 |2|15.16|
 
 ~~~ SQL 
-/*Male and Female Median Charges*/
-SELECT 
-  DISTINCT Sex,
-  ROUND(PERCENTILE_CONT(charges, 0.50) OVER (PARTITION BY Sex),2) AS Sex_Median
-FROM `single-being-353600.Medical_Insurance_Data.Insurance_Data`;
+/*median, 80th and 95th percentile for this same reallocation days metric for each region*/
+SELECT
+  r.region_name,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(DATEDIFF(end_date, start_date) ORDER BY DATEDIFF(end_date, start_date)), ',', COUNT(*) / 2 + 1), ',', -1) AS median_reallocation_days,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(DATEDIFF(end_date, start_date) ORDER BY DATEDIFF(end_date, start_date)), ',', COUNT(*) * 0.8 + 1), ',', -1) AS 80th_percentile_reallocation_days,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(GROUP_CONCAT(DATEDIFF(end_date, start_date) ORDER BY DATEDIFF(end_date, start_date)), ',', COUNT(*) * 0.95 + 1), ',', -1) AS 95th_percentile_reallocation_days
+FROM customer_nodes cn
+join regions r
+on cn.region_id = r.region_id 
+GROUP BY
+  r.region_name;
 ~~~
 
 **Result**
-
-|Sex|Sex_Median|
-|---|---|
-|male|9369.62|
-|female|9412.96|
+|region_name|median_reallocation_days|80th_percentile_reallocation_days|95th_percentile_reallocation_days|
+|---|---|---|---|
+|Africa|18|2|2|
+|America|18|1|1|
+|Asia|17|||
+|Australia|17|||
+|Europe|18|||

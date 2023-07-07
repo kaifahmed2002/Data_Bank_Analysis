@@ -1,41 +1,45 @@
 ~~~ SQL
-/*Median medical Charges by each Region*/
+/*Number of nodes per region*/
 
-SELECT distinct region, median_value AS Median
-FROM (
-  SELECT distinct region,
-         charges AS median_value,
-         ROW_NUMBER() OVER (PARTITION BY region ORDER BY charges) AS row_num,
-         COUNT(*) OVER (PARTITION BY region) AS total_rows
-  FROM cs2_personalmedicalcost.medical_data_dataset
-) AS subquery
-WHERE row_num IN (FLOOR((total_rows+1)/2), FLOOR((total_rows+2)/2));
+SELECT region_name, count(node_id) 
+FROM customer_nodes cn
+join regions r
+on cn.region_id = r.region_id
+group by region_name
+order by 1;
 
 ~~~
 
 **Result**
-|Region|Region_Median|
+|region_name|count(node_id)|
 |---|---|
-|northeast|10058|
-|northwest|8966|
-|southeast|8871|
+|Africa|714|
+|America|735|
+|Asia|665|
+|Australia|770|
+|Europe|616|
 
 ~~~ SQL 
-/*Averages medical Charges by each Region*/
+/*No. customers are allocated to each region*/
 
-SELECT distinct region, avg(charges) 
-FROM cs2_personalmedicalcost.medical_data_dataset
-group by region
-order by 2
+SELECT region_name, count(distinct cn.customer_id) as no_customers 
+FROM customer_nodes cn
+join regions r
+on cn.region_id = r.region_id
+join customer_transactions ct
+on cn.customer_id = ct.customer_id
+group by region_name
+order by 1;
 ~~~
 
 **Result**
-|Region|Region_Median|
+|region_name|no_customers|
 |---|---|
-|northwest|12417|
-|northeast|13406|
-|southeast|14483|
-
+|Africa|102|
+|America|105|
+|Asia|95|
+|Australia|110|
+|Europe|88|
 
 ~~~ SQL 
 /*Average medical Charges by Gender */

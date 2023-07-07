@@ -178,3 +178,24 @@ order by customer_id;
 |2|2020-01-03|549|
 |2|2020-03-24|61|
 |3|2020-01-27|144|
+
+~~~ SQL 
+/*percentage of customers who increase their closing balance by more than 5%*/
+SELECT 
+    (COUNT(DISTINCT customer_id) / (SELECT COUNT(DISTINCT customer_id) FROM customer_transactions)) * 100 AS percentage
+FROM
+    (SELECT 
+        customer_id,
+        MAX(txn_amount) AS max_balance,
+        MIN(txn_amount) AS min_balance
+    FROM
+        customer_transactions
+    GROUP BY customer_id) AS subquery
+WHERE
+    ((max_balance - min_balance) / min_balance) * 100 > 5;
+~~~
+
+**Result(first 5 rows)** 
+|percentage|
+|---|
+|99.8000|

@@ -79,3 +79,33 @@ GROUP BY
 |Asia|17|||
 |Australia|17|||
 |Europe|18|||
+
+~~~ SQL 
+/*the unique count and total amount for each transaction type*/
+SELECT txn_type, count(distinct txn_amount) as unique_count, sum(txn_amount) as total_amount 
+FROM cs3_bankdata_dwd.customer_transactions
+group by 1;
+~~~
+
+**Result**
+|txn_type|unique_count|total_amount|
+|---|---|---|
+|deposit|929|1359168|
+|purchase|815|806537|
+|withdrawal|804|793003|
+
+~~~ SQL 
+/*average total historical deposit counts and amounts for all customers*/
+SELECT AVG(deposit_count) AS avg_deposit_count, AVG(deposit_amount) AS avg_deposit_amount
+FROM (
+    SELECT customer_id, COUNT(*) AS deposit_count, SUM(txn_amount) AS deposit_amount
+    FROM customer_transactions
+    where txn_type = 'deposit'
+    GROUP BY customer_id
+) AS deposit_summary
+~~~
+
+**Result**
+|avg_deposit_count|avg_deposit_amount|
+|---|---|
+|5.3420|2718.3360|

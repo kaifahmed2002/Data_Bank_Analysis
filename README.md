@@ -2,51 +2,32 @@
 
 ## About the Project
 
-In this case study, I will perform data analysis for a Fictional healthcare organization Medicare, As a Junior Data Analyst in the Medicare Solutions project, my role is crucial in supporting the analysis of the personal medical data of 1,338 patients.The primary objective of the analysis is to gain insights into the factors influencing the cost of medical care. By analyzing variables such as age, gender, region, and other relevant factors, Medicare Solutions aims to identify patterns and understand the effects of these variables on the cost of medical services.  I  
-
-
-## ERD 
-
-![Medical Data ERD](https://user-images.githubusercontent.com/112409778/228036499-add02f0a-54b8-4a90-90f9-47e71c843ef0.png)
-
-## Variables
-
-There are a variety of variables that will impact the outcome of this analysis:
-
-- Age: age of primary beneficiary
-  
-- Sex: insurance contractor gender,
-  - Male 
-  - Female
-- Body Mass Index (BMI): Weight to height body mass ratio
-  - Underweight: Below 18.5
-  - Normal: 18.5 - 24.9
-  - Overweight: 25.0 – 29.9
-  - Obese: Greater Than or equal to 30.0 
-- Children: Number of dependents
-- Smoker: Smoking
-- Region: Region of domicile of the patient in the United States.
-  - Northeast 
-  - Southeast 
-  - Northwest
-- Charges: Individual medical costs billed by health insurance for services provided
-
+In this case study, I will perform data analysis for a Fictional financial industry called Data Bank, As a Junior Data Analyst in the Data Bank project, my role is crucial in supporting the analysis of the personal Banking data of 500 customers and There are a few interesting caveats that go with this business model, and this is where the Data Bank team need my help!, Develop a smart data analysis solution to help Data Bank track and forecast customer data storage needs, enabling them to increase their customer base and effectively plan for future developments in their innovative digital banking and secure distributed data storage platform. 
 
 ## Objective
 
-The objective of the analysis is to analyze the effects of variables on the cost of medical care. The analysis seeks to answer the following questions:
+The primary objective of the analysis is to Develop a smart data analysis solution to help Data Bank track and forecast customer data storage needs, enabling them to increase their customer base and effectively plan for future developments in their innovative digital banking and secure distributed data storage platform. The analysis seeks to answer the following questions:
 
-1. Which region has the lowest cost of medical care?
-2. Which gender has the highest typical medical charges?
-3. Is there correlation between the number of dependents a patient has and medical charges?
-4. Is there correlation between age and medical charges?
-5. Do individuals with higher BMI have higher medical charges?
-6. What is the relationship between smoking and medical charges?
+A. Customer Nodes Exploration
+1. How many unique nodes are there on the Data Bank system?
+2. What is the number of nodes per region?
+3. How many customers are allocated to each region?
+4. How many days on average are customers reallocated to a different node?
+5. What is the median, 80th and 95th percentile for this same reallocation days metric for each region?
+
+B. Customer Transactions
+1. What is the unique count and total amount for each transaction type?
+2. What is the average total historical deposit counts and amounts for all customers?
+3. For each month - how many Data Bank customers make more than 1 deposit and either 1 purchase or 1 withdrawal in a single month?
+4. What is the closing balance for each customer at the end of the month?
+5. What is the percentage of customers who increase their closing balance by more than 5%?
 
 
 ## Analysis
 
-1. What region has the lowest cost of medical care?
+A. Customer Nodes Exploration
+
+2. What is the number of nodes per region?
 
 ![Q1 P1](https://github.com/kaifahmed2002/Medical_Data_Analysis/assets/92524691/31d4fab9-4080-461c-94fa-f4fea0c27c62)
 

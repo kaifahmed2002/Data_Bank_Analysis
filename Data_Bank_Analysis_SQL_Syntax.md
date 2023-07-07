@@ -42,17 +42,19 @@ order by 1;
 |Europe|88|
 
 ~~~ SQL 
-/*Average medical Charges by Gender */
-SELECT distinct sex, avg(charges) 
-FROM cs2_personalmedicalcost.medical_data_dataset
-group by sex
-order by 2 desc 
+/*No.days on average are customers reallocated to a different node */
+SELECT node_id, avg(DATEDIFF(end_date, start_date)) AS days_diff
+FROM cs3_bankdata_dwd.customer_nodes
+group by node_id;
 ~~~
 
-|Sex|avg(charges)|
+|node_id|days_diff|
 |---|---|
-|male|13968|
-|female|12945|
+|4|14.81|
+|5|14.71|
+|3|16|
+|1|14.818|
+|2|15.16|
 
 ~~~ SQL 
 /*Male and Female Median Charges*/

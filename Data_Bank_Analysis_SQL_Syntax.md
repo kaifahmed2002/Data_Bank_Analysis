@@ -109,3 +109,25 @@ FROM (
 |avg_deposit_count|avg_deposit_amount|
 |---|---|
 |5.3420|2718.3360|
+
+~~~ SQL 
+/*Data Bank customers make more than 1 deposit and either 1 purchase or 1 withdrawal in a single month*/
+SELECT DATE_FORMAT(txn_date, '%Y-%m') AS year_mont, COUNT(DISTINCT customer_id) AS customer_count
+FROM customer_transactions
+WHERE txn_type IN ('purchase', 'withdrawal') AND customer_id IN (
+    SELECT customer_id
+    FROM customer_transactions
+    WHERE txn_type = 'deposit'
+    GROUP BY customer_id
+    HAVING COUNT(*) > 1
+)
+GROUP BY year_mont;
+~~~
+
+**Result**
+|year_mont|customer_count|
+|---|---|
+|2020-01|283|
+|2020-02|389|
+|2020-03|399|
+|2020-04|238|
